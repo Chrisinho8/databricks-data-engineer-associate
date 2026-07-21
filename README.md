@@ -21,7 +21,7 @@ exam (version effective **May 4, 2026** onward): a complete study guide plus thr
 | `Mock-Exam2.html` | A second interactive 45-question practice exam. Harder mode: tougher, near-miss distractors and noisier scenarios. |
 | `Mock-Exam3.html` | A third interactive 45-question practice exam, all-new questions, same format. |
 
-## 🎯 Exam blueprint (for reference)
+## 🎯 Exam blueprint
 
 45 scored questions · 90 minutes · ~70% to pass.
 
@@ -39,7 +39,7 @@ exam (version effective **May 4, 2026** onward): a complete study guide plus thr
 
 1. Read the guide, focusing on the "One-Minute Recap" and "contrast" boxes in each domain.
 2. Sit an exam in one uninterrupted 90-minute block, then review the per-domain breakdown.
-3. Send your remaining study time into whichever domains you scored lowest on.
+3. Spend your remaining study time into whichever domains you scored lowest on.
 4. Aim to clear **38 / 45 on each of the three exams** before you book the real thing.
 
 ## 📄 License
