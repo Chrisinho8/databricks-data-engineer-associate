@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databricks DE Associate — Practice Exam 2 (Harder)</title>
+<style>
+  :root{
+    --navy:#122c26; --navy2:#1c3d4e; --teal:#2f8079; --cream:#fbfaf6;
+    --ink:#24211d; --muted:#7c7c73; --line:#d5d5cc;
+    --green:#4f8b6f; --greenbg:#eef5ef; --greenink:#2f6b4f;
+    --red:#c0663f; --redbg:#fbf0ea; --redink:#b0522f;
+    --blue:#5b7fa6; --bluebg:#eef2f6; --blueink:#315679;
+    --gold:#b8985a; --goldbg:#f8f3e7;
+  }
+  *{box-sizing:border-box}
+  body{font-family:'Lora',Georgia,'Times New Roman',serif;background:#eceae3;color:var(--ink);margin:0;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 16px 80px;}
+  code{font-family:'DejaVu Sans Mono',Menlo,Consolas,monospace;font-size:.86em;background:#eeeade;padding:1px 4px;border-radius:3px;color:#3a3630;}
+  .cover{background:var(--navy);color:#eef1ee;border-radius:0 0 14px 14px;padding:46px 28px 34px;margin:0 -16px 22px;}
+  .cover .kick{color:#8fc7a0;letter-spacing:3px;text-transform:uppercase;font-size:12px;margin-bottom:14px;}
+  .cover h1{font-size:30px;line-height:1.1;margin:0 0 8px;font-weight:700;}
+  .cover .badge{display:inline-block;background:#7a3b2c;color:#ffe;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+  .cover p{color:#cfd8d4;font-style:italic;margin:0 0 16px;}
+  .cover .facts{font-size:13px;color:#bcc7c2;border-top:1px solid #2c4a3f;padding-top:14px;line-height:1.8;}
+  .btn{font-family:inherit;cursor:pointer;border:none;border-radius:8px;padding:12px 22px;font-size:16px;font-weight:700;background:var(--teal);color:#fff;}
+  .btn:hover{filter:brightness(1.06)}
+  .btn.big{display:inline-block;margin-top:6px}
+  .bar{position:sticky;top:0;z-index:20;background:var(--cream);border:1px solid var(--line);border-radius:12px;
+       padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .bar .prog{flex:1;font-size:13px;color:var(--muted)}
+  .bar .track{height:7px;background:#e3e3da;border-radius:5px;overflow:hidden;margin-top:5px;}
+  .bar .fill{height:100%;background:var(--teal);width:0;transition:width .2s}
+  .timer{font-family:'DejaVu Sans Mono',monospace;font-weight:700;font-size:18px;color:var(--navy2);min-width:74px;text-align:center;}
+  .timer.warn{color:var(--red)}
+  .qcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .qtag{color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;font-size:10.5px;font-weight:700;}
+  .qnum{color:var(--muted);font-size:12px;float:right}
+  .qtext{font-weight:700;margin:6px 0 12px;font-size:15.5px;}
+  label.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid #e6e6de;border-radius:8px;padding:9px 12px;margin:6px 0;cursor:pointer;transition:.12s;}
+  label.opt:hover{border-color:var(--teal);background:#fafdfb}
+  label.opt input{margin-top:3px}
+  label.opt .ol{font-weight:700;color:var(--navy2);margin-right:2px}
+  label.opt.sel{border-color:var(--teal);background:#f1f8f5}
+  label.opt.correct{border-color:var(--green);background:var(--greenbg)}
+  label.opt.wrong{border-color:var(--red);background:var(--redbg)}
+  .mark{margin-left:auto;font-weight:700;white-space:nowrap}
+  .mark.g{color:var(--greenink)} .mark.r{color:var(--redink)}
+  .exp{margin-top:10px;background:var(--bluebg);border-left:3px solid var(--blue);border-radius:6px;padding:9px 12px;font-size:14px;}
+  .exp b{color:var(--blueink)}
+  .results{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px;}
+  .score{font-size:46px;font-weight:700;color:var(--navy2);line-height:1}
+  .score small{font-size:20px;color:var(--muted)}
+  .verdict{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:15px;}
+  .v-ready{background:var(--greenbg);border-left:4px solid var(--green)}
+  .v-close{background:var(--goldbg);border-left:4px solid var(--gold)}
+  .v-no{background:var(--redbg);border-left:4px solid var(--red)}
+  table{border-collapse:collapse;width:100%;margin-top:8px;font-size:14px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #eee}
+  th{color:var(--teal);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .dbar{height:8px;background:#e9e9e1;border-radius:5px;overflow:hidden;min-width:90px;display:inline-block;vertical-align:middle}
+  .dbar > i{display:block;height:100%}
+  .hide{display:none}
+  .footnote{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
+  .submitrow{position:sticky;bottom:0;background:linear-gradient(transparent,#eceae3 40%);padding:18px 0 6px;text-align:center;}
+</style>
+<style>
+  label.opt.locked{cursor:default}
+  label.opt.locked:hover{background:#fff}
+  label.opt.locked.correct, label.opt.locked.correct:hover{background:var(--greenbg)}
+  label.opt.locked.wrong, label.opt.locked.wrong:hover{background:var(--redbg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="start">
+    <div class="cover">
+      <div class="badge">HARD MODE</div>
+      <div class="kick">Practice Exam 2 · Harder mode</div>
+      <h1>Data Engineer Associate<br>Full-Length Mock Exam</h1>
+      <p>45 questions · 90 minutes. Longer, noisier scenarios. Two genuinely tempting answers per question. Several flip the usual reflex — read carefully. Each answer locks in with instant feedback, and your overall score and domain breakdown come at the end.</p>
+      <div class="facts">
+        Built to feel closer to real exam difficulty than the earlier sets: the key detail is often buried in the stem, distractors are near-misses, and a few questions punish the "obvious" answer (when approximate is wrong, when AQE is already on, when Standard/Shared looks safe but isn't).<br>
+        Questions and options shuffle every attempt · pass target ≈ 70% (32/45) · timer auto-submits at 0:00.
+      </div>
+    </div>
+    <p style="color:var(--muted);font-style:italic;margin:0 0 14px">Discipline that helps most here: read the LAST sentence first, decide what's actually asked, eliminate two, then apply a fine rule. Fresh questions — all original questions.</p>
+    <button class="btn big" onclick="startExam()">Start Hard Mode →</button>
+  </div>
+
+  <div id="exam" class="hide">
+    <div class="bar">
+      <div class="prog"><span id="progText">0 / 45 answered · 0 correct</span>
+        <div class="track"><div id="fill" class="fill"></div></div></div>
+      <div id="timer" class="timer">90:00</div>
+    </div>
+    <div id="questions"></div>
+    <div class="submitrow"><button class="btn" onclick="submitExam()">Submit &amp; see overall result</button></div>
+  </div>
+
+  <div id="results" class="hide"></div>
+  <div class="footnote">Standalone practice file · not affiliated with Databricks · aligned to the May 4 2026 exam objectives · difficulty is an estimate, not a guarantee.</div>
+</div>
+
+<script>
+const BANK = [
+ {d:"1 · Platform", q:"A single data scientist needs Unity Catalog governance and must use an R package plus a cluster-scoped init script. A teammate says \"use Standard (Shared) so it stays governed.\" Which access mode actually works, and why is Standard wrong here?",
+  o:["Standard (Shared) — it's governed and supports every language.","Dedicated (Single User) — Standard can't run R or init scripts, while Dedicated supports both with full UC.","No Isolation Shared — it's the only mode that allows init scripts.","A serverless SQL warehouse — it can run R notebooks."],c:1,
+  e:"Standard/Shared enforces UC for many users but cannot run R or cluster-scoped init scripts. Dedicated (Single User) supports R, init scripts and the ML runtime with full UC as the single identity. No Isolation Shared is ungoverned; SQL warehouses run SQL only."},
+ {d:"1 · Platform", q:"A heavy SQL ETL with several large joins runs slowly on a classic cluster. The team wants the join execution itself to run faster, without changing where or how the compute is provisioned. Which change targets the right axis?",
+  o:["Switch to serverless so Databricks manages the VMs.","Enable Photon, the C++ vectorized execution engine.","Raise <code>spark.driver.memory</code>.","Add more automatic retries to the job."],c:1,
+  e:"Photon accelerates SQL/DataFrame execution (joins, aggregations, scans). Serverless changes the deployment model (who runs the VMs), not how fast a join executes — a different axis. Driver memory and retries don't speed up joins."},
+ {d:"1 · Platform", q:"A compliance auditor asks which components ever touch the actual bytes of your Delta tables versus only metadata. Which statement is correct?",
+  o:["The control plane executes queries and caches the table data.","The compute plane reads the data from your own cloud object storage; the control plane holds only metadata, permissions and orchestration.","Serverless compute stores your table data inside Databricks' account.","Unity Catalog physically stores the table's data files."],c:1,
+  e:"Data always lives in your cloud object storage and is read by the compute plane. The control plane (and UC) hold metadata, permissions and orchestration only — never the table bytes, even for serverless."},
+
+ {d:"2 · Ingestion", q:"A few thousand new files land nightly with a stable schema, owned by a SQL-first team that wants the simplest idempotent load into a UC table and no streaming infrastructure to operate. A colleague pushes for Auto Loader \"because it scales.\" Which is the better fit here?",
+  o:["Auto Loader with file notifications, for future scale.","<code>COPY INTO</code> on a schedule — simplest idempotent SQL batch, no streaming to run.","A plain <code>spark.read</code> of the folder each night.","A continuous streaming job."],c:1,
+  e:"Modest periodic batch, stable schema, SQL team, no streaming wanted → COPY INTO (idempotent, pure SQL). Auto Loader shines at high volume / continuous / evolving schema; it's overkill and adds streaming machinery here."},
+ {d:"2 · Ingestion", q:"An Auto Loader stream stopped detecting new columns after restarts. An engineer \"simplified\" it by pointing <code>cloudFiles.schemaLocation</code> and <code>checkpointLocation</code> at the same folder. What is the correct configuration?",
+  o:["One shared folder is fine; they store the same thing.","Separate folders: schemaLocation persists the inferred/evolving schema; checkpointLocation tracks which files are processed.","Only checkpointLocation is needed; schemaLocation is optional.","schemaLocation should point at the source data directory."],c:1,
+  e:"They do different jobs and must be separate folders: schemaLocation stores the inferred schema so evolution is detected; checkpointLocation stores streaming progress. Sharing one folder breaks schema-change detection."},
+ {d:"2 · Ingestion", q:"A nightly <code>COPY INTO</code> started duplicating rows table-wide. The only change was adding <code>COPY_OPTIONS('force'='true')</code> to reload one file that had been corrected. Why did duplicates appear across the whole table?",
+  o:["<code>mergeSchema</code> re-read old columns.","<code>force='true'</code> bypasses file tracking and re-ingests every matching file, not just the corrected one.","COPY INTO is never idempotent.","<code>inferSchema</code> reads the data twice."],c:1,
+  e:"force='true' turns off loaded-file tracking for the whole source path, so every file is re-ingested → table-wide duplicates. To reload just the corrected file, load it specifically rather than forcing the entire path."},
+ {d:"2 · Ingestion", q:"A vendor switched from newline-delimited JSON (one object per line) to files that each contain a single pretty-printed JSON array spanning many lines. The existing reader now returns all nulls. What is the minimal fix?",
+  o:["<code>.option(\"multiLine\",\"true\")</code>","<code>.option(\"inferSchema\",\"true\")</code>","<code>.option(\"mode\",\"PERMISSIVE\")</code>","Read the files as text and parse them manually."],c:0,
+  e:"Spark defaults to newline-delimited JSON; a multi-line object or a top-level array needs multiLine=true. inferSchema only guesses types; mode sets the corrupt-record policy, not multi-line parsing."},
+ {d:"2 · Ingestion", q:"You must ingest Salesforce CRM objects into Unity Catalog with minimal code, built-in governance, and managed incremental sync. Auto Loader and a custom REST client were both suggested. What is the best fit?",
+  o:["Auto Loader on a nightly Salesforce CSV export in S3.","A Lakeflow Connect managed connector for Salesforce.","A REST client in a notebook, scheduled by a Job.","<code>COPY INTO</code> from the Salesforce API."],c:1,
+  e:"SaaS app data with least code and governance → Lakeflow Connect managed connector (Salesforce is GA). Auto Loader/REST are code-based fallbacks when no managed connector exists; COPY INTO can't read a SaaS API."},
+ {d:"2 · Ingestion", q:"A JDBC read from PostgreSQL is slow, and the Spark UI shows the whole read ran in a single partition — even though <code>numPartitions=8</code> was set. What is missing?",
+  o:["A larger <code>fetchsize</code>.","<code>partitionColumn</code>, <code>lowerBound</code> and <code>upperBound</code> must all be set alongside <code>numPartitions</code>.","More executors on the cluster.","Enabling Photon."],c:1,
+  e:"numPartitions is ignored unless partitionColumn + lowerBound + upperBound are also provided; without all three Spark uses a single partition regardless of numPartitions."},
+ {d:"2 · Ingestion", q:"In Databricks SQL, a column <code>payload</code> holds a JSON string. You must read the nested field <code>user.id</code> as an INT. Which expression is valid and direct?",
+  o:["<code>extract_json(payload,'user.id')::INT</code>","<code>payload:user.id::INT</code>","<code>payload.user.id</code>","<code>from_json(payload).user.id</code>"],c:1,
+  e:"The colon operator extracts JSON/Variant fields and ::TYPE casts: <code>payload:user.id::INT</code>. extract_json doesn't exist; dot-only access fails on a JSON string; from_json needs a schema argument."},
+ {d:"2 · Ingestion", q:"A scheduled job should ingest all files that arrived since the last run in micro-batches and then stop (not run continuously), to keep costs down. Which trigger?",
+  o:["<code>trigger(processingTime='30 seconds')</code>","<code>trigger(availableNow=True)</code>","No trigger (default — runs continuously)","<code>trigger(once=True)</code> on a continuous cluster"],c:1,
+  e:"availableNow processes all currently-available data in micro-batches then stops — batch-like and cheap for scheduled incremental jobs. processingTime and the default keep the stream running."},
+ {d:"2 · Ingestion", q:"50 million small JSON files land per day, the schema drifts every week, and the data must land in governed UC Delta tables with near-continuous freshness. Which ingestion method is the priority choice?",
+  o:["<code>COPY INTO</code> on a 5-minute schedule.","Auto Loader (cloudFiles) with file-notification mode and schema evolution.","A Lakeflow Connect managed connector.","Nightly <code>spark.read</code> of the directory."],c:1,
+  e:"High volume + continuous arrival + evolving schema → Auto Loader, with file-notification mode for the huge file count and addNewColumns for drift. COPY INTO fits modest periodic batches; there's no managed connector for arbitrary file drops."},
+
+ {d:"3 · Transformation", q:"To keep the latest row per customer with all columns, an engineer wrote <code>df.orderBy(col('ts').desc()).dropDuplicates(['id'])</code> but the results change run to run. Why, and what is correct?",
+  o:["dropDuplicates is buggy; call <code>distinct()</code> instead.","dropDuplicates shuffles by key and keeps an arbitrary row — the earlier sort is discarded; use a window with <code>row_number()==1</code> ordered by ts desc.","<code>groupBy('id').agg(max('ts'))</code> returns the full latest row and is correct.","Add <code>.cache()</code> before dropDuplicates to stabilize the order."],c:1,
+  e:"dropDuplicates repartitions by the key and retains an arbitrary row per key, so the prior global sort doesn't survive — non-deterministic. Only a window (partitionBy id, orderBy ts desc, row_number()==1) ties ordering to grouping while keeping all columns. groupBy+max drops the other columns."},
+ {d:"3 · Transformation", q:"An 8 MB Parquet dimension keeps auto-broadcasting and OOMing the driver. A teammate suggests raising <code>spark.sql.autoBroadcastJoinThreshold</code> to 20 MB. What actually stops the broadcast, and what size does Spark compare against?",
+  o:["Set it to 20 MB; that stops the broadcast.","Set it to -1 to force a shuffle join; note Spark compares the uncompressed in-memory size (often far larger than the 8 MB file), not the file size.","Set it to 0, which broadcasts only tiny tables.","Convert the dimension to CSV so it won't broadcast."],c:1,
+  e:"Only -1 disables auto-broadcast (forces a shuffle join). Raising the threshold makes broadcasting more likely, not less. Eligibility is judged on estimated uncompressed in-memory size, which for an 8 MB Parquet file can be tens of MB."},
+ {d:"3 · Transformation", q:"You need only the orders whose <code>customer_id</code> does NOT appear in a <code>suppressed_customers</code> table, and you must not add any of that table's columns. Which join?",
+  o:["Inner join, then filter nulls.","Left anti join.","Left semi join.","Full outer join, then filter."],c:1,
+  e:"Left anti join returns left rows with no match and adds no right-side columns — exactly 'not in the other table'. Left semi is the opposite (rows that DO match). Inner/full add columns and/or the wrong rows."},
+ {d:"3 · Transformation", q:"After exploding an <code>items</code> array to one row per item, total order counts dropped because some orders had empty item arrays and disappeared. You must retain those orders as a single row with a null item. Fix?",
+  o:["<code>explode()</code>","<code>explode_outer()</code>","<code>posexplode()</code>","Filter out empty arrays before exploding."],c:1,
+  e:"explode drops rows whose array is empty or null; explode_outer keeps them, emitting a null element so the order survives."},
+ {d:"3 · Transformation", q:"A regulatory filing needs the EXACT number of distinct <code>account_id</code>s across 4 billion rows. For speed, a teammate proposes <code>approx_count_distinct</code>. What is appropriate?",
+  o:["approx_count_distinct — the small error is always fine.","countDistinct — the filing requires an exact number, so the HyperLogLog approximation is not acceptable despite the shuffle cost.","<code>count('*')</code> — it returns distinct values.","dropDuplicates then count, which is faster than countDistinct."],c:1,
+  e:"approx_count_distinct trades accuracy for speed (~2% default error) — great for dashboards, wrong for an exact regulatory figure. Use exact countDistinct here even though it shuffles. count('*') isn't distinct at all."},
+ {d:"3 · Transformation", q:"A Gold table must join Silver orders — which receive late UPDATEs and DELETEs — to a dimension and stay incrementally fresh for BI dashboards. A streaming table was proposed. Which object is correct, and why not the streaming table?",
+  o:["A streaming table — it's the lowest-latency option.","A materialized view — it stores query results and refreshes incrementally, and unlike an append-only streaming table it handles update/delete sources and recomputes joins.","A plain view — always correct and free.","A global temp view."],c:1,
+  e:"Streaming tables are append-only and don't recompute joins or handle update/delete sources. A materialized view stores the joined result and incrementally refreshes over changing sources — the recommended Gold object here. A plain view recomputes everything every query."},
+ {d:"3 · Transformation", q:"Inside a Lakeflow Declarative Pipeline, rows failing a rule must be discarded, the pipeline must keep running, and the violation count must still be recorded. Which expectation?",
+  o:["<code>@dp.expect</code> (keeps the rows, only warns)","<code>@dp.expect_or_drop</code>","<code>@dp.expect_or_fail</code> (halts the pipeline)","A Delta <code>CHECK</code> constraint"],c:1,
+  e:"expect_or_drop removes offending rows, keeps running, and records the metric. Bare expect keeps bad rows; expect_or_fail stops the pipeline; CHECK isn't valid inside a pipeline definition."},
+ {d:"3 · Transformation", q:"On a modern DBR cluster, a job produces 200 shuffle partitions over a small dataset, creating many tiny tasks. An engineer wants to hardcode <code>spark.sql.shuffle.partitions=8</code>. What is the best consideration?",
+  o:["Always hardcode 8; 200 is never right.","Adaptive Query Execution (on by default) already coalesces shuffle partitions at runtime, so manual tuning is usually unnecessary and mainly matters when AQE is off or for stubborn cases.","Raise <code>spark.default.parallelism</code> instead; it controls DataFrame shuffles.","Set it to the number of input files."],c:1,
+  e:"AQE dynamically coalesces post-shuffle partitions from actual data size, handling the tiny-task problem automatically on modern DBR. Manual tuning matters mostly when AQE is disabled. default.parallelism affects RDDs, not DataFrame shuffles."},
+ {d:"3 · Transformation", q:"After <code>silver = bronze.withColumn('age', col('age').cast('int'))</code>, the count of non-null <code>age</code> dropped sharply, with no error raised. What happened, and the safe practice?",
+  o:["Schema enforcement rejected the rows.","Values that couldn't be cast (e.g. 'unknown') silently became NULL; validate non-null counts before/after a cast to catch data loss.","The cast threw and rolled back the write.","cast('int') truncated decimals to null."],c:1,
+  e:"In Spark a failed cast returns NULL silently rather than erroring, so bad values quietly become nulls. The professional habit is to compare non-null counts before and after casting to detect silent loss."},
+
+ {d:"4 · Jobs", q:"Job B must run right after Job A commits new data to an upstream Delta table — not when raw files land in a bucket, and not on a fixed clock. Which trigger for Job B?",
+  o:["File arrival trigger on the raw landing zone.","Table update trigger on the upstream Delta table.","A 10-minute cron schedule.","Continuous mode."],c:1,
+  e:"Table update trigger fires when the specified Delta table is updated — chaining on real data readiness from Job A. File arrival watches file drops, not table commits; cron risks empty/stale runs."},
+ {d:"4 · Jobs", q:"Source files arrive irregularly 2–5 times a day. A 15-minute cron \"is cheap enough,\" but you want no empty runs and no stale-data lag. Best trigger?",
+  o:["Keep the 15-minute cron; it's cheap.","A file arrival trigger, so the job runs exactly when files land.","Continuous mode for lowest latency.","A table update trigger on the raw files."],c:1,
+  e:"A file arrival trigger runs precisely when data lands — eliminating empty runs and stale data. Continuous is overkill/expensive for a few arrivals a day; table update watches Delta commits, not raw files."},
+ {d:"4 · Jobs", q:"A task that writes to a Delta table failed partway, leaving partial rows; on automatic retry it risks duplicating them. What most reliably makes the task safe to retry?",
+  o:["Increase the retry count.","Make the write idempotent — e.g. MERGE on the business key (or a keyed overwrite) — so a retry updates in place instead of duplicating.","Disable retries entirely.","Add a longer retry interval."],c:1,
+  e:"Retries only help if the operation is idempotent. A MERGE on the business key (or keyed overwrite) means re-running doesn't create duplicates. Tuning retry count/interval doesn't fix the duplication risk."},
+ {d:"4 · Jobs", q:"A Python notebook task computes a cutoff date and sets it as a task value; a downstream SQL Query task must filter on it. An engineer put <code>dbutils.jobs.taskValues.get(...)</code> inside the SQL and it failed. Correct reference?",
+  o:["Call the Python getter inside the SQL WHERE clause.","Use the dynamic value reference <code>{{tasks.&lt;task&gt;.values.&lt;name&gt;}}</code> in the query text or parameters.","Join <code>system.lakeflow.task_values</code>.","Task values can't be shared across task types."],c:1,
+  e:"A SQL task can't run the Python dbutils getter. Lakeflow substitutes the placeholder <code>{{tasks.&lt;task&gt;.values.&lt;name&gt;}}</code> into the query text/parameters before execution."},
+ {d:"4 · Jobs", q:"A final \"send failure alert\" task must fire only when at least one upstream task failed, and be skipped when everything succeeded. Which run-if condition?",
+  o:["All done — run regardless of result.","At least one failed.","All succeeded.","None failed."],c:1,
+  e:"'At least one failed' fires only on a failure and skips on full success — exactly a failure-only alert branch. 'All done' would also run on success; 'All succeeded' is the opposite; 'None failed' runs when nothing failed."},
+ {d:"4 · Jobs", q:"A 10-task job failed at task 7. Tasks 1–6 already wrote data and are expensive and side-effecting. After fixing the bug, what's the cheapest, safest way to complete the run?",
+  o:["Re-run the whole job from task 1.","Use Repair run to re-execute only the failed and downstream tasks.","Clone the job and run the clone from scratch.","Manually run task 7 in a notebook outside the job."],c:1,
+  e:"Repair run re-executes only the failed/remaining tasks, avoiding re-processing the expensive successful ones. A full re-run wastes work and may re-side-effect; running outside the job breaks lineage/monitoring."},
+ {d:"4 · Jobs", q:"An external Airflow DAG finishes an upload and must start a specific Databricks job at that exact moment. Options floated include a Databricks schedule with a time buffer, or a file arrival trigger. What is the most direct, exact approach?",
+  o:["A Databricks cron with a safety buffer after the expected finish.","Have Airflow call the Databricks Jobs REST API <code>run-now</code> endpoint when its upload task completes.","A continuous Databricks job polling for the files.","Nothing — Databricks can't be triggered externally."],c:1,
+  e:"Airflow already knows the instant it finished, so the most direct, exact trigger is Airflow calling run-now (a push). A file arrival trigger is a reasonable event-driven alternative, but a timed buffer risks early/late starts and polling wastes compute."},
+
+ {d:"5 · CI/CD", q:"Your bundle passed <code>validate</code>. A reviewer now wants the precise set of resources that would be created, updated, or deleted on the next deploy — without deploying. Which command?",
+  o:["<code>databricks bundle summary</code>","<code>databricks bundle plan</code>","<code>databricks bundle deploy --dry-run</code>","<code>databricks bundle show</code>"],c:1,
+  e:"bundle plan previews the exact create/update/delete actions without deploying. summary is a human-readable overview of the resolved bundle, not a change diff; deploy --dry-run and bundle show don't exist."},
+ {d:"5 · CI/CD", q:"A bundle variable must hold a map of cluster tags (several key/value pairs) and be referenced as one object. How is it declared and referenced?",
+  o:["<code>type: dict</code>, referenced as <code>{var.tags}</code>","<code>type: complex</code>, referenced as <code>${var.tags}</code>","<code>type: map</code>, referenced as <code>$tags</code>","No type; list the pairs inline at each use."],c:1,
+  e:"A structured (map/object/list) variable is declared <code>type: complex</code> and referenced with <code>${var.name}</code>. 'dict'/'map' aren't valid bundle schema keywords."},
+ {d:"5 · CI/CD", q:"Five engineers keep deploying the same job to one workspace, colliding on resource names, and half-finished schedules keep firing at night. Which single target setting fixes both, and how does production mode differ?",
+  o:["A cluster policy per engineer.","<code>mode: development</code> — it prefixes resource names with each user's name and pauses schedules/triggers; production mode uses clean names and typically runs as a service principal.","<code>mode: production</code> — it isolates each user automatically.","Increase max concurrent runs."],c:1,
+  e:"development mode prefixes names (no collisions) and pauses schedules (nothing fires accidentally). production mode deploys clean names and typically runs as a service principal. A cluster policy governs compute, not naming/scheduling."},
+ {d:"5 · CI/CD", q:"An engineer edited notebooks in a Git Folder and wants the merge to main to trigger deployment. They tried to open a pull request first, before anything else. What is the correct sequence?",
+  o:["Open the PR, then commit and push.","Select changed files, commit &amp; push to a feature branch, then open a PR into main; the merge triggers deploy.","Commit directly to main so it deploys immediately.","Rebase main onto the feature branch, then open the PR."],c:1,
+  e:"A PR merges commits that are already pushed, so you commit &amp; push a feature branch first, then open the PR; merging to main triggers deploy. Never commit straight to main; rebase is discouraged for beginners."},
+ {d:"5 · CI/CD", q:"You run <code>databricks bundle destroy -t test</code>. Which is true about what it removes?",
+  o:["It deletes your local <code>databricks.yml</code> and source code.","It removes the resources the bundle deployed to the test workspace (jobs, pipelines), but leaves your local files and code untouched.","It drops the underlying Delta tables' data.","It removes resources from all targets at once."],c:1,
+  e:"bundle destroy tears down the workspace resources the bundle created for that target only. Local project files/code and table data are not touched."},
+
+ {d:"6 · Troubleshooting", q:"A stage shows one task at 15× the median with Max shuffle read far above median — classic skew on one hot join key. The team confirms AQE with skew join handling is already enabled, yet this specific key still lags. What is the best next step?",
+  o:["Add more executors so the slow task finishes sooner.","Salt the skewed key (or broadcast the smaller side if it fits) to split that one oversized partition manually.","Lower <code>spark.sql.shuffle.partitions</code> to coalesce tasks.","Switch to a faster instance type."],c:1,
+  e:"AQE handles most skew automatically, but when a single hot key still dominates despite AQE, the manual remedies are salting the key or broadcasting the small side. More executors leave the one task alone; fewer partitions worsen skew."},
+ {d:"6 · Troubleshooting", q:"A job completes successfully but the Spark UI shows multi-GB 'Spill (disk)' on a stage. What's the correct interpretation and first optimization?",
+  o:["The job actually failed; re-run it.","Memory overflowed to disk (slow, not a crash); give executors more memory or increase partitions so less data sits per task.","Rows were silently dropped; add a quality check.","The driver ran out of memory; reduce <code>collect()</code>."],c:1,
+  e:"Spill means data exceeded memory and was written to disk — slower but not a failure. Fix with more executor memory or more/right-sized partitions. It's an executor-stage issue, not a driver collect() problem."},
+ {d:"6 · Troubleshooting", q:"You change the <code>CLUSTER BY</code> keys on a large Delta table to match new query filters. A teammate expects those queries to speed up immediately. Why won't they yet, and what's required?",
+  o:["They will speed up immediately; CLUSTER BY rewrites data synchronously.","<code>ALTER ... CLUSTER BY</code> only updates metadata; existing files keep their old layout until an <code>OPTIMIZE</code> (manual or predictive) re-clusters them.","You must DROP and recreate the table to apply new keys.","Liquid Clustering can't change keys after creation."],c:1,
+  e:"Changing the clustering key is metadata-only. Existing data is re-clustered lazily by OPTIMIZE (manual or predictive); only new writes use the new key right away. Liquid Clustering specifically allows changing keys without a full rewrite."},
+ {d:"6 · Troubleshooting", q:"Which statement about predictive optimization is correct?",
+  o:["It runs OPTIMIZE/VACUUM on your always-on all-purpose cluster.","It automatically runs OPTIMIZE/VACUUM on Unity Catalog managed tables using Databricks-managed serverless compute, when beneficial.","It optimizes external Hive-metastore tables by default.","It fully replaces the need for Liquid Clustering."],c:1,
+  e:"Predictive optimization auto-runs maintenance on UC managed tables on Databricks-managed serverless — you don't provision compute. It targets managed tables and complements (doesn't replace) Liquid Clustering."},
+ {d:"6 · Troubleshooting", q:"A transformation uses <code>mapPartitions</code> and the function does <code>rows = list(iterator)</code> before processing. On large partitions the executors OOM. Root cause and fix?",
+  o:["Too few shuffle partitions; raise <code>spark.sql.shuffle.partitions</code>.","<code>list(iterator)</code> materializes the entire partition in memory at once → executor OOM; keep it lazy (iterate/yield row by row).","The driver ran out of memory; raise <code>spark.driver.memory</code>.","It's a skew problem; enable AQE."],c:1,
+  e:"mapPartitions hands you a lazy iterator; calling list() pulls the whole partition into memory, causing executor OOM. Fix by staying lazy (process/yield per row) — it's a memory-usage bug, not a shuffle or driver issue."},
+
+ {d:"7 · Governance", q:"Bob reads a sales table through the 'analysts' group grant. You REVOKE SELECT from Bob directly, but he still has access. You must block only Bob while every other analyst keeps access. Best action?",
+  o:["Remove the SELECT grant from the analysts group.","Apply <code>DENY</code> SELECT to Bob — DENY overrides the inherited group GRANT and blocks only him.","Remove Bob from the analysts group.","REVOKE SELECT from Bob again."],c:1,
+  e:"DENY on Bob overrides the group grant and is surgical — others keep access. Removing the group grant blocks all analysts; removing Bob from the group may strip his other, unrelated access; re-revoking a grant he never held personally does nothing."},
+ {d:"7 · Governance", q:"In one employees table, managers must see all rows but with salary masked unless they're in HR, AND each manager must see only their own department's rows. What correctly enforces both?",
+  o:["A single column mask on salary.","A row filter on department plus a column mask on salary (or one dynamic view doing both).","A single row filter on department.","A DENY on the salary column."],c:1,
+  e:"Row-level restriction (department) needs a row filter; hiding the salary value needs a column mask. Apply both (or a dynamic view that filters rows and masks the column). One alone solves only half; DENY can't do value-level masking."},
+ {d:"7 · Governance", q:"You must enforce masking on every column tagged as PII across 3,000 existing tables and all future ones. A junior tagged columns with free-form tags and wrote an ABAC policy, but nothing got masked. Why, and the correct approach?",
+  o:["Per-table column masks are the only option; ABAC can't scale.","ABAC evaluates governed tags (admin-controlled), not free-form tags; use governed tags plus one ABAC policy that applies wherever the tag appears, including future tables.","The policy needs a DENY on each table.","Free-form tags work, but only after a VACUUM."],c:1,
+  e:"ABAC only acts on governed tags (controlled, auditable), not ad-hoc free-form tags — which is why nothing masked. With governed tags plus one ABAC policy, masking applies across all tagged columns now and on future tagged tables."},
+ {d:"7 · Governance", q:"A table's data files survived a <code>DROP TABLE</code>. Later someone ran <code>ALTER TABLE ... SET MANAGED</code> on a similar table. What was the dropped table's type, and what does SET MANAGED do?",
+  o:["It was managed; SET MANAGED just relabels metadata without moving data.","It was external (files survive a drop); SET MANAGED converts an external table to managed, copying its data into UC-managed storage.","It was managed; SET MANAGED deletes the underlying files.","It was external; SET MANAGED only works on views."],c:1,
+  e:"Files surviving a DROP means it was external (UC removed only metadata). SET MANAGED converts external → managed in place and copies the data into UC-managed storage (the original external files remain until you delete them)."},
+ {d:"7 · Governance", q:"A user was granted SELECT at the catalog level and has USE CATALOG, but still can't query one specific table. What is the most likely missing privilege?",
+  o:["Ownership of the table.","<code>USE SCHEMA</code> on that table's schema.","<code>MODIFY</code> on the table.","A second SELECT grant on the table itself."],c:1,
+  e:"Traversal needs USE CATALOG + USE SCHEMA + SELECT. Catalog-level SELECT can cascade, but USE SCHEMA is a separate privilege that must be present on the schema; without it the object can't be reached."},
+ {d:"7 · Governance", q:"To register an external table over an existing <code>s3://bucket/raw</code> path and let a pipeline read those raw files, which objects must exist?",
+  o:["Just a storage credential.","An external location backed by a storage credential (the credential grants UC access to the cloud path; the external location scopes it).","A managed volume and a checkpoint.","A metastore and a SQL warehouse only."],c:1,
+  e:"External tables/locations on a cloud path require an external location that is backed by a storage credential. The credential holds the cloud IAM access; the external location registers/scopes the path for UC."},
+ {d:"7 · Governance", q:"A service principal must upload files to <code>/Volumes/main/raw/land</code>, and later a job reads them back. INSERT was granted but uploads fail. Which privileges are actually needed?",
+  o:["INSERT to write, SELECT to read.","WRITE VOLUME to upload and READ VOLUME to read — INSERT/SELECT apply to table rows, not volume files.","MODIFY on the volume.","ALL PRIVILEGES on the catalog."],c:1,
+  e:"Volumes hold files, so their privileges are file privileges: WRITE VOLUME to upload, READ VOLUME to read. INSERT/SELECT govern table rows and don't grant volume file access."},
+];
+
+let quiz=[], remaining=90*60, timerId=null, graded=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const LETTERS=["A","B","C","D","E"];
+function buildQuiz(){
+  quiz = shuffle(BANK.map((q,idx)=>({...q,src:idx}))).map(q=>{
+    const opts=q.o.map((text,i)=>({text,correct:i===q.c})); shuffle(opts);
+    return {d:q.d,q:q.q,e:q.e,opts,picked:null,locked:false,correctIdx:opts.findIndex(o=>o.correct)};
+  });
+}
+function render(){
+  const wrap=document.getElementById("questions"); wrap.innerHTML="";
+  quiz.forEach((q,qi)=>{
+    const card=document.createElement("div"); card.className="qcard"; card.id="q"+qi;
+    let html=`<span class="qtag">Domain ${q.d}</span><span class="qnum">Question ${qi+1} of 45</span><div class="qtext">${q.q}</div>`;
+    q.opts.forEach((o,oi)=>{ html+=`<label class="opt" id="q${qi}o${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="pick(${qi},${oi})"><span class="ol">${LETTERS[oi]}.</span><span>${o.text}</span></label>`; });
+    card.innerHTML=html; wrap.appendChild(card);
+  });
+  updateProgress();
+}
+function pick(qi,oi){
+  if(graded) return;
+  const q=quiz[qi];
+  if(q.locked) return;
+  q.picked=oi; q.locked=true;
+  revealQuestion(qi);
+  updateProgress();
+}
+function revealQuestion(qi){
+  const q=quiz[qi];
+  q.opts.forEach((o,oi)=>{
+    const el=document.getElementById(`q${qi}o${oi}`);
+    el.classList.add("locked"); el.classList.remove("sel");
+    el.querySelector("input").disabled=true;
+    if(oi===q.correctIdx){
+      el.classList.add("correct");
+      if(!el.querySelector(".mark")) el.insertAdjacentHTML("beforeend",`<span class="mark g">✓ correct</span>`);
+    }
+    if(q.picked!==null && q.picked===oi && oi!==q.correctIdx){
+      el.classList.add("wrong");
+      if(!el.querySelector(".mark")) el.insertAdjacentHTML("beforeend",`<span class="mark r">✗ your answer</span>`);
+    }
+  });
+  if(!document.querySelector(`#q${qi} .exp`))
+    document.getElementById("q"+qi).insertAdjacentHTML("beforeend",`<div class="exp"><b>Explanation.</b> ${q.e}</div>`);
+}
+function updateProgress(){
+  const done=quiz.filter(q=>q.locked).length;
+  const corr=quiz.filter(q=>q.locked && q.picked===q.correctIdx).length;
+  document.getElementById("progText").textContent=`${done} / 45 answered · ${corr} correct`;
+  document.getElementById("fill").style.width=(done/45*100)+"%";
+}
+function startExam(){ buildQuiz(); render();
+  document.getElementById("start").classList.add("hide");
+  document.getElementById("exam").classList.remove("hide");
+  window.scrollTo(0,0); timerId=setInterval(tick,1000); }
+function tick(){ remaining--; const m=Math.floor(remaining/60), s=remaining%60;
+  const t=document.getElementById("timer"); t.textContent=`${m}:${String(s).padStart(2,"0")}`;
+  if(remaining<=300)t.classList.add("warn"); if(remaining<=0){clearInterval(timerId); submitExam(true);} }
+function submitExam(auto){
+  if(graded) return;
+  const unanswered=quiz.filter(q=>!q.locked).length;
+  if(!auto && unanswered>0){ if(!confirm(`You have ${unanswered} unanswered question(s). Submit and see your overall result?`))return; }
+  graded=true; clearInterval(timerId);
+  let correct=0; const dom={};
+  quiz.forEach((q,qi)=>{
+    if(!q.locked) revealQuestion(qi);
+    const isRight = q.locked && q.picked===q.correctIdx;
+    if(isRight) correct++;
+    const key=q.d; dom[key]=dom[key]||{c:0,t:0}; dom[key].t++; if(isRight)dom[key].c++;
+  });
+  showResults(correct,dom,auto);
+}
+function showResults(correct,dom,auto){
+  const pct=Math.round(correct/45*100); let vclass,vtitle,vtext;
+  if(correct>=38){vclass="v-ready";vtitle="Strong — and this set is the hard one.";vtext="Clearing 38+ on Hard Mode is a real signal. Do the official practice questions and one outside bank to confirm from independent sources, then book.";}
+  else if(correct>=32){vclass="v-close";vtitle="Passing, on a deliberately tough set.";vtext="You're over the line on the hard version — encouraging. Tighten the weak domains below, retake, and cross-check with the official samples before booking.";}
+  else if(correct>=27){vclass="v-close";vtitle="Close on a hard set — keep going.";vtext="This set is meant to punish the obvious answer. Review the domains you lost most, then retry — your real-exam score is likely a bit above this.";}
+  else{vclass="v-no";vtitle="More study needed.";vtext="Hard Mode exposes the fine distinctions. Go back to the chapter recaps and the contrast boxes for your weak domains, and get hands-on before the next attempt.";}
+  const order=["1 · Platform","2 · Ingestion","3 · Transformation","4 · Jobs","5 · CI/CD","6 · Troubleshooting","7 · Governance"];
+  let rows="";
+  order.forEach(k=>{ if(!dom[k])return; const d=dom[k]; const p=Math.round(d.c/d.t*100);
+    const col=p>=70?"var(--green)":p>=50?"var(--gold)":"var(--red)";
+    rows+=`<tr><td>Domain ${k}</td><td>${d.c} / ${d.t}</td><td><span class="dbar"><i style="width:${p}%;background:${col}"></i></span> ${p}%</td></tr>`; });
+  const r=document.getElementById("results"); r.classList.remove("hide");
+  r.innerHTML=`<div class="results"><div class="qtag">Your result${auto?" · time expired":""} · Hard Mode</div>
+      <div class="score">${correct}<small> / 45 &nbsp;·&nbsp; ${pct}%</small></div>
+      <div class="verdict ${vclass}"><b>${vtitle}</b><br>${vtext}</div>
+      <h3 style="margin:14px 0 4px;color:var(--navy2)">By domain (find your weak spots)</h3>
+      <table><thead><tr><th>Domain</th><th>Score</th><th>%</th></tr></thead><tbody>${rows}</tbody></table>
+      <p style="color:var(--muted);font-size:13px;margin-top:12px">Scroll down to review every question — correct answer in green, your pick flagged, with explanations. This set skews harder than the real exam on purpose, so a pass here is a confident signal.</p>
+      <button class="btn" onclick="retake()">Retake (reshuffle everything) ↻</button></div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function retake(){ graded=false; remaining=90*60;
+  document.getElementById("results").classList.add("hide"); document.getElementById("results").innerHTML="";
+  document.getElementById("timer").classList.remove("warn"); document.getElementById("timer").textContent="90:00";
+  buildQuiz(); render(); window.scrollTo(0,0); timerId=setInterval(tick,1000); }
+</script>
+</body>
+</html>

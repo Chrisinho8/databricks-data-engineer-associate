@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databricks DE Associate Practice Exam 3</title>
+<style>
+  :root{
+    --navy:#1d3a34; --navy2:#1c3d4e; --teal:#2f8079; --cream:#fbfaf6;
+    --ink:#24211d; --muted:#7c7c73; --line:#d5d5cc;
+    --green:#4f8b6f; --greenbg:#eef5ef; --greenink:#2f6b4f;
+    --red:#c0663f; --redbg:#fbf0ea; --redink:#b0522f;
+    --blue:#5b7fa6; --bluebg:#eef2f6; --blueink:#315679;
+    --gold:#b8985a; --goldbg:#f8f3e7;
+  }
+  *{box-sizing:border-box}
+  body{font-family:'Lora',Georgia,'Times New Roman',serif;background:#eceae3;color:var(--ink);margin:0;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 16px 80px;}
+  code{font-family:'DejaVu Sans Mono',Menlo,Consolas,monospace;font-size:.86em;background:#eeeade;padding:1px 4px;border-radius:3px;color:#3a3630;}
+  .cover{background:var(--navy);color:#eef1ee;border-radius:0 0 14px 14px;padding:46px 28px 34px;margin:0 -16px 22px;}
+  .cover .kick{color:#8fc7b3;letter-spacing:3px;text-transform:uppercase;font-size:12px;margin-bottom:14px;}
+  .cover h1{font-size:30px;line-height:1.1;margin:0 0 8px;font-weight:700;}
+  .cover .badge{display:inline-block;background:#2e5a4d;color:#fff;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+  .cover p{color:#cfe0d8;font-style:italic;margin:0 0 16px;}
+  .cover .facts{font-size:13px;color:#bcd4c9;border-top:1px solid #33574a;padding-top:14px;line-height:1.8;}
+  .btn{font-family:inherit;cursor:pointer;border:none;border-radius:8px;padding:12px 22px;font-size:16px;font-weight:700;background:var(--teal);color:#fff;}
+  .btn:hover{filter:brightness(1.06)}
+  .btn.big{display:inline-block;margin-top:6px}
+  .bar{position:sticky;top:0;z-index:20;background:var(--cream);border:1px solid var(--line);border-radius:12px;
+       padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .bar .prog{flex:1;font-size:13px;color:var(--muted)}
+  .bar .track{height:7px;background:#e3e3da;border-radius:5px;overflow:hidden;margin-top:5px;}
+  .bar .fill{height:100%;background:var(--teal);width:0;transition:width .2s}
+  .timer{font-family:'DejaVu Sans Mono',monospace;font-weight:700;font-size:18px;color:var(--navy2);min-width:74px;text-align:center;}
+  .timer.warn{color:var(--red)}
+  .qcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .qtag{color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;font-size:10.5px;font-weight:700;}
+  .qnum{color:var(--muted);font-size:12px;float:right}
+  .qtext{font-weight:700;margin:6px 0 12px;font-size:15.5px;}
+  label.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid #e6e6de;border-radius:8px;padding:9px 12px;margin:6px 0;cursor:pointer;transition:.12s;}
+  label.opt:hover{border-color:var(--teal);background:#fafdfb}
+  label.opt.locked{cursor:default}
+  label.opt.locked:hover{background:#fff}
+  label.opt input{margin-top:3px}
+  label.opt .ol{font-weight:700;color:var(--navy2);margin-right:2px}
+  label.opt.sel{border-color:var(--teal);background:#f1f8f5}
+  label.opt.correct{border-color:var(--green);background:var(--greenbg)}
+  label.opt.wrong{border-color:var(--red);background:var(--redbg)}
+  label.opt.locked:hover.correct{background:var(--greenbg)}
+  label.opt.locked:hover.wrong{background:var(--redbg)}
+  .mark{margin-left:auto;font-weight:700;white-space:nowrap}
+  .mark.g{color:var(--greenink)} .mark.r{color:var(--redink)}
+  .exp{margin-top:10px;background:var(--bluebg);border-left:3px solid var(--blue);border-radius:6px;padding:9px 12px;font-size:14px;}
+  .exp b{color:var(--blueink)}
+  .results{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px;}
+  .score{font-size:46px;font-weight:700;color:var(--navy2);line-height:1}
+  .score small{font-size:20px;color:var(--muted)}
+  .verdict{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:15px;}
+  .v-ready{background:var(--greenbg);border-left:4px solid var(--green)}
+  .v-close{background:var(--goldbg);border-left:4px solid var(--gold)}
+  .v-no{background:var(--redbg);border-left:4px solid var(--red)}
+  table{border-collapse:collapse;width:100%;margin-top:8px;font-size:14px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #eee}
+  th{color:var(--teal);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .dbar{height:8px;background:#e9e9e1;border-radius:5px;overflow:hidden;min-width:90px;display:inline-block;vertical-align:middle}
+  .dbar > i{display:block;height:100%}
+  .hide{display:none}
+  .footnote{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
+  .submitrow{position:sticky;bottom:0;background:linear-gradient(transparent,#eceae3 40%);padding:18px 0 6px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="start">
+    <div class="cover">
+      <div class="badge">INSTANT FEEDBACK</div>
+      <div class="kick">Practice Exam 3 · Balanced options</div>
+      <h1>Data Engineer Associate<br>Full-Length Mock Exam</h1>
+      <p>45 all-new questions · 90 minutes. Each pick locks in with the correct answer + explanation instantly; your overall score and domain breakdown come at the end.</p>
+      <div class="facts">
+        Same rules as the other practice exams, brand-new content: options are parallel and terse with no length tell, and every wrong answer is a real, near-miss term.<br>
+        Answers lock on click and can't be changed · questions and options shuffle every attempt · pass target ≈ 70% (32/45) · timer auto-submits at 0:00.
+      </div>
+    </div>
+    <p style="color:var(--muted);font-style:italic;margin:0 0 14px">Commit before you tap — answers lock immediately. Press Submit at the end (or when the timer runs out) for your overall result. Fresh questions — all original questions.</p>
+    <button class="btn big" onclick="startExam()">Start the exam →</button>
+  </div>
+
+  <div id="exam" class="hide">
+    <div class="bar">
+      <div class="prog"><span id="progText">0 / 45 answered · 0 correct</span>
+        <div class="track"><div id="fill" class="fill"></div></div></div>
+      <div id="timer" class="timer">90:00</div>
+    </div>
+    <div id="questions"></div>
+    <div class="submitrow"><button class="btn" onclick="submitExam()">Submit &amp; see overall result</button></div>
+  </div>
+
+  <div id="results" class="hide"></div>
+  <div class="footnote">Standalone practice file · not affiliated with Databricks · aligned to the May 4 2026 exam objectives.</div>
+</div>
+
+<script>
+const BANK = [
+ {d:"1 · Platform", q:"For a serverless SQL warehouse, whose account runs the underlying VMs?",
+  o:["Databricks' account","Your cloud account","An on-prem data center","The control plane node"],c:0,
+  e:"Serverless compute runs in Databricks' account (bundled into a higher DBU rate). Classic compute runs VMs in your own cloud account; the control plane holds only metadata/orchestration."},
+ {d:"1 · Platform", q:"Which clause reads a Delta table as it existed at an earlier version number?",
+  o:["VERSION AS OF","TIMESTAMP OFFSET","SNAPSHOT AT","ROLLBACK TO"],c:0,
+  e:"SELECT ... VERSION AS OF n (or TIMESTAMP AS OF) is Delta time travel. TIMESTAMP OFFSET, SNAPSHOT AT, and ROLLBACK TO are not valid syntax."},
+ {d:"1 · Platform", q:"Which is the correct fully-qualified reference to a Unity Catalog table?",
+  o:["catalog.schema.table","schema.table","database.table","workspace.schema.table"],c:0,
+  e:"Unity Catalog uses a three-level namespace: catalog.schema.table. Two-level (schema.table) is the legacy Hive style; the others aren't valid."},
+
+ {d:"2 · Ingestion", q:"By default, how does Auto Loader discover newly-arrived files?",
+  o:["Directory listing","File notifications","Table update events","A manual refresh call"],c:0,
+  e:"Directory listing is the default. File notification mode (cloud events) is opt-in and scales better for very large directories; table events and manual refresh aren't Auto Loader mechanisms."},
+ {d:"2 · Ingestion", q:"Which is a valid FILEFORMAT for the COPY INTO command?",
+  o:["JSON","DELTA_STREAM","JDBC","KAFKA"],c:0,
+  e:"COPY INTO supports file formats like JSON, CSV, PARQUET, AVRO, ORC. DELTA_STREAM, JDBC, and KAFKA are not file formats it loads."},
+ {d:"2 · Ingestion", q:"Which Lakeflow Connect connector type is fully managed for SaaS apps like Salesforce?",
+  o:["Managed connector","Standard connector","Partner connector","Foreign connector"],c:0,
+  e:"Managed connectors are point-and-click pipelines from SaaS apps/databases (Salesforce, Workday, SQL Server). Standard connectors cover cloud storage/streams; the others aren't Lakeflow Connect types."},
+ {d:"2 · Ingestion", q:"What does a streaming query's checkpointLocation store?",
+  o:["Processed offsets and progress","The inferred table schema","The physical query plan","The output result data written so far"],c:0,
+  e:"The checkpoint tracks which offsets/files have been processed so a restart resumes exactly-once. The schema lives in schemaLocation (for Auto Loader); the plan and output are separate."},
+ {d:"2 · Ingestion", q:"Why avoid inferSchema=true on large CSV files in production?",
+  o:["It scans the data an extra time","It silently drops null rows","It disables the Photon vectorized engine","It forces multiLine parsing"],c:0,
+  e:"inferSchema reads the data twice (once to infer, once to load), which is slow on big files. Supply an explicit schema instead. It doesn't drop nulls, disable Photon, or force multiLine."},
+ {d:"2 · Ingestion", q:"Which reads a governed Unity Catalog table by its registered name?",
+  o:["spark.read.table(name)","spark.read.load(path)","spark.read.json(path)","spark.read.parquet(path)"],c:0,
+  e:"spark.read.table (or spark.table) reads a registered UC table by name. The load/json/parquet variants read files at a path, not a catalog-registered table."},
+ {d:"2 · Ingestion", q:"Which trigger keeps an Auto Loader stream running, processing a micro-batch every 30 seconds?",
+  o:["processingTime='30 seconds'","availableNow=True","once=True","a nightly cron schedule instead"],c:0,
+  e:"trigger(processingTime='30 seconds') runs a micro-batch on a fixed interval, always on. availableNow catches up then stops; once is legacy single-batch; a cron is a job schedule, not a stream trigger."},
+ {d:"2 · Ingestion", q:"A BI tool such as Power BI connects to Databricks using which driver protocol?",
+  o:["ODBC","Spark JDBC","cloudFiles","REST run-now"],c:0,
+  e:"BI tools connect over ODBC (Simba driver). JDBC is Spark's connector to external databases; cloudFiles is Auto Loader; run-now is a Jobs API endpoint."},
+ {d:"2 · Ingestion", q:"To reach the nested struct field customer.city in PySpark, which expression?",
+  o:["col('customer.city')","explode('customer')","get_json_object('customer')","from_json('customer')"],c:0,
+  e:"Dot notation col('customer.city') reads a nested struct field. explode is for arrays, get_json_object/from_json are for JSON strings, not struct columns."},
+
+ {d:"3 · Transformation", q:"Cleaning nulls and standardizing data types produces which medallion layer?",
+  o:["Silver","Bronze","Gold","Platinum"],c:0,
+  e:"Cleaning, typing, dedup and joins move Bronze (raw) to Silver (clean/conformed). Gold is aggregated business tables; Platinum isn't a medallion layer."},
+ {d:"3 · Transformation", q:"Which forces Spark to broadcast a small table in a join?",
+  o:["broadcast(df)","hint('shuffle')","repartition(1)","coalesce(1)"],c:0,
+  e:"Wrapping the small side in broadcast(df) forces a broadcast join. repartition/coalesce change partition counts, not join strategy; there's no 'shuffle' hint that broadcasts."},
+ {d:"3 · Transformation", q:"In PySpark, two column conditions must be combined with:",
+  o:["& and parentheses","the Python and keyword","the && operator","the AND function"],c:0,
+  e:"PySpark uses & | ~ with each condition in parentheses. Python's and/or/not don't work on Column objects, and && isn't valid Python."},
+ {d:"3 · Transformation", q:"avg() is identical to which aggregate function?",
+  o:["mean()","median()","mode()","sum()"],c:0,
+  e:"avg() and mean() are the same function. median and mode are different statistics; sum totals values."},
+ {d:"3 · Transformation", q:"df.dropDuplicates() with no arguments dedupes on:",
+  o:["All columns","The first column","The primary key","Nothing at all"],c:0,
+  e:"With no arguments dropDuplicates compares every column, so rows differing in any field are both kept. Pass a subset (e.g. the business key) to dedupe on identity."},
+ {d:"3 · Transformation", q:"Which ranking window function leaves gaps after ties (1, 1, 3)?",
+  o:["rank()","dense_rank()","row_number()","ntile()"],c:0,
+  e:"rank() gives tied rows the same rank and skips the next (1,1,3). dense_rank() has no gaps (1,1,2), row_number() is always unique, ntile() buckets rows."},
+ {d:"3 · Transformation", q:"Which parameter sizes the memory that runs distributed stage work?",
+  o:["spark.executor.memory","spark.driver.memory","spark.sql.shuffle.partitions","spark.default.parallelism"],c:0,
+  e:"Executors do the distributed work, so spark.executor.memory covers stage/shuffle memory. Driver memory is for collected results/broadcasts; the other two set partition counts."},
+ {d:"3 · Transformation", q:"In Databricks SQL, a streaming table reads its source with which keyword?",
+  o:["STREAM()","read_stream()","readStream()","STREAMING()"],c:0,
+  e:"SQL uses STREAM(source) inside a streaming table definition. read_stream/readStream are the PySpark side; STREAMING() isn't valid."},
+ {d:"3 · Transformation", q:"Which pipeline expectation halts the whole update on a violation?",
+  o:["expect_or_fail","expect_or_drop","expect","warn_only"],c:0,
+  e:"expect_or_fail stops the pipeline update. expect_or_drop removes bad rows and continues, bare expect only records a metric, and warn_only isn't a real decorator."},
+
+ {d:"4 · Jobs", q:"Which Lakeflow Jobs task type refreshes a DBSQL/Lakeview dashboard?",
+  o:["Dashboard task","Notebook task","Pipeline task","SQL query task"],c:0,
+  e:"A Dashboard task refreshes a dashboard after data loads. Notebook/Pipeline run code/ETL; a SQL query task runs a query or alert, not a dashboard refresh."},
+ {d:"4 · Jobs", q:"Which task lets one job invoke another job as a step?",
+  o:["Run Job task","For-each task","Condition task","Notebook task"],c:0,
+  e:"A Run Job task calls another job, enabling modular composition. For-each loops, condition branches, and notebook runs code."},
+ {d:"4 · Jobs", q:"A downstream task with two upstream parents runs when (by default):",
+  o:["Both parents succeed","Either parent succeeds","The first parent starts","It is triggered manually"],c:0,
+  e:"Default run-if is 'all succeeded', so a fan-in task waits for both parents to finish successfully. Other run-if settings change this behavior."},
+ {d:"4 · Jobs", q:"Retries are the appropriate control-flow feature for which failure?",
+  o:["A transient network blip","A SQL column-name typo error","A missing source table","A permission error"],c:0,
+  e:"Retries fix transient/flaky failures that may pass on a second try. Deterministic errors (typos, missing tables, permissions) fail every retry."},
+ {d:"4 · Jobs", q:"Which trigger keeps a cluster always running for lowest latency and highest cost?",
+  o:["Continuous","Scheduled","File arrival","Table update"],c:0,
+  e:"Continuous keeps the job/cluster always on — lowest latency, highest cost. Scheduled, file arrival, and table update spin up only when there's work."},
+ {d:"4 · Jobs", q:"Which call publishes a value from one task for a later task to read?",
+  o:["dbutils.jobs.taskValues.set","dbutils.widgets.get","dbutils.fs.put","spark.conf.set on the session"],c:0,
+  e:"dbutils.jobs.taskValues.set publishes a task value; a downstream task reads it with .get (or the {{tasks...}} placeholder). The others read widgets, write files, or set Spark configs."},
+ {d:"4 · Jobs", q:"Production scheduled tasks should run on which compute to minimize cost?",
+  o:["A job cluster","An all-purpose cluster","A SQL warehouse","A single-node cluster"],c:0,
+  e:"Job clusters use the cheaper jobs DBU rate and terminate after the run. All-purpose stays up and costs 2–3× more; SQL warehouses are for BI; single-node is for tiny dev work."},
+
+ {d:"5 · CI/CD", q:"A Databricks Git Folder authenticates to GitHub using:",
+  o:["A personal access token","The cluster's cloud IAM role","A storage credential","A metastore key"],c:0,
+  e:"A Git Folder authenticates via a per-user personal access token / Git credential (or a service principal for automation). IAM roles, storage credentials, and metastore keys are unrelated."},
+ {d:"5 · CI/CD", q:"The Declarative Automation Bundle lifecycle order is:",
+  o:["validate, deploy, run","run, deploy, validate","deploy, validate, run","plan, run, deploy"],c:0,
+  e:"You validate the config, deploy it to a target, then run the job/pipeline. The other orderings put steps out of sequence."},
+ {d:"5 · CI/CD", q:"Best practice for feature work in a Git Folder is to:",
+  o:["Work on a feature branch","Commit straight to main","Edit prod notebooks live","Skip pull requests"],c:0,
+  e:"Work on a feature branch, open a PR, and let the merge to main trigger deploy. Committing straight to main or editing prod live is risky and skips review."},
+ {d:"5 · CI/CD", q:"Git Folders version your code, but not your:",
+  o:["Table data","Notebooks","Python scripts","Commit history"],c:0,
+  e:"Git versions code (notebooks, scripts) and its history — not table data. Sharing live data is Delta Sharing's job, not Git's."},
+ {d:"5 · CI/CD", q:"Where should pipeline credentials be stored?",
+  o:["A secret scope","In the notebook code","In the bundle YAML","In a job widget"],c:0,
+  e:"Store credentials in a secret scope and read them with dbutils.secrets.get. Hardcoding them in code, YAML, or widgets exposes them."},
+
+ {d:"6 · Troubleshooting", q:"Which Spark UI signal most clearly indicates data skew in a stage?",
+  o:["Max task time far above median","High total input size across tasks","Long cluster startup","Low overall CPU use"],c:0,
+  e:"Skew shows as one task's Max time (and shuffle read) far above the median while others finish quickly. Big input size alone isn't skew; startup and CPU idle are different issues."},
+ {d:"6 · Troubleshooting", q:"The main advantage of Liquid Clustering over Hive partitioning is:",
+  o:["Keys can change without a rewrite","It needs no underlying storage at all","It removes all shuffles","It replaces the Photon engine"],c:0,
+  e:"Liquid Clustering lets you change the clustering keys later without rewriting the table, and avoids the small-file problem. It still stores data, doesn't remove shuffles, and isn't an engine."},
+ {d:"6 · Troubleshooting", q:"Predictive optimization automatically runs which maintenance operations?",
+  o:["OPTIMIZE and VACUUM","GRANT and REVOKE statements","MERGE and DELETE","CREATE and DROP"],c:0,
+  e:"Predictive optimization auto-runs OPTIMIZE (compaction) and VACUUM (cleanup) on UC managed tables. The others are access-control or data-manipulation commands."},
+ {d:"6 · Troubleshooting", q:"A collect() of a very large result most likely causes:",
+  o:["A driver out-of-memory error","An executor out-of-memory error","A disk spill only","A cluster startup failure"],c:0,
+  e:"collect()/toPandas() pull all data to the driver, so a huge result OOMs the driver. Executor OOM comes from skew/too few partitions mid-stage; spill and startup are different."},
+ {d:"6 · Troubleshooting", q:"Which Spark UI metric being non-zero indicates disk spill?",
+  o:["Spill (disk)","Shuffle read","GC time","Input rows"],c:0,
+  e:"A non-zero 'Spill (disk)' (or Spill memory) metric means data overflowed memory to disk. Shuffle read, GC time, and input rows are normal stage metrics."},
+
+ {d:"7 · Governance", q:"To query a table, a user needs USE CATALOG, USE SCHEMA, and:",
+  o:["SELECT","MODIFY","OWNER","MANAGE"],c:0,
+  e:"Reading a table needs the traversal grants (USE CATALOG + USE SCHEMA) plus SELECT. MODIFY changes data, OWNER/MANAGE are administrative."},
+ {d:"7 · Governance", q:"With both a GRANT and a DENY on the same object, the result is:",
+  o:["Access denied","Access allowed","A runtime error","Last change wins"],c:0,
+  e:"DENY overrides GRANT, so the result is denied. It is an explicit block that beats grants, including inherited group grants."},
+ {d:"7 · Governance", q:"Dropping a managed table also:",
+  o:["Deletes the underlying files","Keeps the underlying data files intact","Converts it to external","Creates a backup copy"],c:0,
+  e:"Dropping a managed table deletes its data files (UC owns the storage). External tables keep their files; only metadata is removed."},
+ {d:"7 · Governance", q:"An external table on a cloud path needs an external location plus:",
+  o:["A storage credential","A cluster policy template","A managed volume","A checkpoint folder"],c:0,
+  e:"External tables require an external location backed by a storage credential (which grants UC access to the cloud path). Policies, volumes, and checkpoints are unrelated."},
+ {d:"7 · Governance", q:"To hide entire rows based on a user's group membership, use:",
+  o:["A row filter","A column mask","A CHECK constraint","A NOT NULL rule"],c:0,
+  e:"A row filter (row-level security) removes whole rows by who the user is. A column mask hides a field's value; CHECK and NOT NULL validate writes."},
+ {d:"7 · Governance", q:"Which principal type should production jobs run as?",
+  o:["A service principal","A named individual user","A group","The account admin"],c:0,
+  e:"Production jobs run as a service principal (a robot identity) so pipelines don't break when a person leaves. Users, groups, and admins tie automation to humans."},
+ {d:"7 · Governance", q:"The READ VOLUME privilege grants the ability to:",
+  o:["Read files in a volume","Select table rows","Write files to a volume","Manage grants on it"],c:0,
+  e:"READ VOLUME reads files in a UC volume; WRITE VOLUME uploads them. SELECT is for table rows and MANAGE delegates administration — neither applies to volume files."},
+];
+
+let quiz=[], remaining=90*60, timerId=null, graded=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const LETTERS=["A","B","C","D","E"];
+function buildQuiz(){
+  quiz = shuffle(BANK.map((q,idx)=>({...q,src:idx}))).map(q=>{
+    const opts=q.o.map((text,i)=>({text,correct:i===q.c})); shuffle(opts);
+    return {d:q.d,q:q.q,e:q.e,opts,picked:null,locked:false,correctIdx:opts.findIndex(o=>o.correct)};
+  });
+}
+function render(){
+  const wrap=document.getElementById("questions"); wrap.innerHTML="";
+  quiz.forEach((q,qi)=>{
+    const card=document.createElement("div"); card.className="qcard"; card.id="q"+qi;
+    let html=`<span class="qtag">Domain ${q.d}</span><span class="qnum">Question ${qi+1} of 45</span><div class="qtext">${q.q}</div>`;
+    q.opts.forEach((o,oi)=>{ html+=`<label class="opt" id="q${qi}o${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="pick(${qi},${oi})"><span class="ol">${LETTERS[oi]}.</span><span>${o.text}</span></label>`; });
+    card.innerHTML=html; wrap.appendChild(card);
+  });
+  updateProgress();
+}
+function pick(qi,oi){
+  if(graded) return;
+  const q=quiz[qi];
+  if(q.locked) return;
+  q.picked=oi; q.locked=true;
+  revealQuestion(qi);
+  updateProgress();
+}
+function revealQuestion(qi){
+  const q=quiz[qi];
+  q.opts.forEach((o,oi)=>{
+    const el=document.getElementById(`q${qi}o${oi}`);
+    el.classList.add("locked"); el.classList.remove("sel");
+    el.querySelector("input").disabled=true;
+    if(oi===q.correctIdx){
+      el.classList.add("correct");
+      if(!el.querySelector(".mark")) el.insertAdjacentHTML("beforeend",`<span class="mark g">✓ correct</span>`);
+    }
+    if(q.picked!==null && q.picked===oi && oi!==q.correctIdx){
+      el.classList.add("wrong");
+      if(!el.querySelector(".mark")) el.insertAdjacentHTML("beforeend",`<span class="mark r">✗ your answer</span>`);
+    }
+  });
+  if(!document.querySelector(`#q${qi} .exp`))
+    document.getElementById("q"+qi).insertAdjacentHTML("beforeend",`<div class="exp"><b>Explanation.</b> ${q.e}</div>`);
+}
+function updateProgress(){
+  const done=quiz.filter(q=>q.locked).length;
+  const corr=quiz.filter(q=>q.locked && q.picked===q.correctIdx).length;
+  document.getElementById("progText").textContent=`${done} / 45 answered · ${corr} correct`;
+  document.getElementById("fill").style.width=(done/45*100)+"%";
+}
+function startExam(){ buildQuiz(); render();
+  document.getElementById("start").classList.add("hide");
+  document.getElementById("exam").classList.remove("hide");
+  window.scrollTo(0,0); timerId=setInterval(tick,1000); }
+function tick(){ remaining--; const m=Math.floor(remaining/60), s=remaining%60;
+  const t=document.getElementById("timer"); t.textContent=`${m}:${String(s).padStart(2,"0")}`;
+  if(remaining<=300)t.classList.add("warn"); if(remaining<=0){clearInterval(timerId); submitExam(true);} }
+function submitExam(auto){
+  if(graded) return;
+  const unanswered=quiz.filter(q=>!q.locked).length;
+  if(!auto && unanswered>0){ if(!confirm(`You have ${unanswered} unanswered question(s). Submit and see your overall result?`))return; }
+  graded=true; clearInterval(timerId);
+  let correct=0; const dom={};
+  quiz.forEach((q,qi)=>{
+    if(!q.locked) revealQuestion(qi);
+    const isRight = q.locked && q.picked===q.correctIdx;
+    if(isRight) correct++;
+    const key=q.d; dom[key]=dom[key]||{c:0,t:0}; dom[key].t++; if(isRight)dom[key].c++;
+  });
+  showResults(correct,dom,auto);
+}
+function showResults(correct,dom,auto){
+  const pct=Math.round(correct/45*100); let vclass,vtitle,vtext;
+  if(correct>=38){vclass="v-ready";vtitle="Strong — you know the exact terms.";vtext="High marks on a no-tells set means real recall. Confirm with the official practice questions and one outside bank, then book.";}
+  else if(correct>=32){vclass="v-close";vtitle="Passing.";vtext="Over the line. Tighten the weak domains below, retake, and cross-check with the official samples before booking.";}
+  else if(correct>=27){vclass="v-close";vtitle="Close — the near-misses got you.";vtext="This set rewards exact knowledge of the right term. Review the domains you lost most, then retry.";}
+  else{vclass="v-no";vtitle="More study needed.";vtext="When every distractor is plausible, only precise knowledge wins. Revisit the chapter recaps for your weak domains and get hands-on.";}
+  const order=["1 · Platform","2 · Ingestion","3 · Transformation","4 · Jobs","5 · CI/CD","6 · Troubleshooting","7 · Governance"];
+  let rows="";
+  order.forEach(k=>{ if(!dom[k])return; const d=dom[k]; const p=Math.round(d.c/d.t*100);
+    const col=p>=70?"var(--green)":p>=50?"var(--gold)":"var(--red)";
+    rows+=`<tr><td>Domain ${k}</td><td>${d.c} / ${d.t}</td><td><span class="dbar"><i style="width:${p}%;background:${col}"></i></span> ${p}%</td></tr>`; });
+  const r=document.getElementById("results"); r.classList.remove("hide");
+  r.innerHTML=`<div class="results"><div class="qtag">Your overall result${auto?" · time expired":""}</div>
+      <div class="score">${correct}<small> / 45 &nbsp;·&nbsp; ${pct}%</small></div>
+      <div class="verdict ${vclass}"><b>${vtitle}</b><br>${vtext}</div>
+      <h3 style="margin:14px 0 4px;color:var(--navy2)">By domain (find your weak spots)</h3>
+      <table><thead><tr><th>Domain</th><th>Score</th><th>%</th></tr></thead><tbody>${rows}</tbody></table>
+      <p style="color:var(--muted);font-size:13px;margin-top:12px">Scroll down to re-read any question — you saw the feedback as you went; this is the summary and your weak domains.</p>
+      <button class="btn" onclick="retake()">Retake (reshuffle everything) ↻</button></div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function retake(){ graded=false; remaining=90*60;
+  document.getElementById("results").classList.add("hide"); document.getElementById("results").innerHTML="";
+  document.getElementById("timer").classList.remove("warn"); document.getElementById("timer").textContent="90:00";
+  buildQuiz(); render(); window.scrollTo(0,0); timerId=setInterval(tick,1000); }
+</script>
+</body>
+</html>
