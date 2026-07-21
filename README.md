@@ -19,7 +19,7 @@ exam (version effective **May 4, 2026** onward): a complete study guide plus two
 | File | What it is |
 |------|------------|
 | `Databricks_DE_Associate_Guide.pdf` | Full study guide covering all 7 domains and every subdomain: worked code, analogies, common traps, one-minute recaps, a master cheat sheet, and a bonus 45-question mock with answer key. |
-| `Mock-exam1.html` | Interactive 45-question practice exam. Instant per-question feedback, 90-minute timer, score + per-domain breakdown. Length-balanced options so you can't guess from shape. |
+| `Mock-Exam1.html` | Interactive 45-question practice exam. Instant per-question feedback, 90-minute timer, score + per-domain breakdown. Length-balanced options so you can't guess from shape. |
 | `Mock-Exam2.html` | A second interactive 45-question practice exam, all-new questions, same format. |
  
 ## 🎯 Exam blueprint (for reference)
