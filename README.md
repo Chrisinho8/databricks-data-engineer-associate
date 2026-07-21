@@ -1,7 +1,7 @@
 
 # Databricks Certified Data Engineer Associate - Study Kit (Unofficial)
  
-Free, community-made study material for the **Databricks Certified Data Engineer Associate**
+Free study material for the **Databricks Certified Data Engineer Associate**
 exam (version effective **May 4, 2026** onward): a complete study guide plus two
 **interactive, self-scoring practice exams** you can take right in your browser.
  
