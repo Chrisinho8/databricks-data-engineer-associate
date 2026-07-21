@@ -1,4 +1,4 @@
-Readme · MD
+
 # Databricks Certified Data Engineer Associate — Study Kit (Unofficial)
  
 Free, community-made study material for the **Databricks Certified Data Engineer Associate**
@@ -12,19 +12,7 @@ exam (version effective **May 4, 2026** onward): a complete study guide plus two
 > name are trademarks of their respective owner, used here only to describe what this
 > material studies for. Always confirm details against the official exam guide at
 > [databricks.com/learn/certification](https://www.databricks.com/learn/certification/data-engineer-associate).
- 
-## ▶️ Take a practice exam (live)
- 
-The mock exams run in your browser: pick an answer for instant feedback, get a timed
-90-minute run, and see a score plus a per-domain breakdown at the end. Questions and answer
-options are shuffled on every attempt.
- 
-> Turn on **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / root), then
-> replace `USERNAME` and `REPO` below with your own. The links go live in about a minute.
- 
-- **Practice Exam 1** — https://USERNAME.github.io/REPO/Mock-exam1.html
-- **Practice Exam 2** — https://USERNAME.github.io/REPO/Mock-Exam2.html
-(You can also just download either `.html` file and open it locally in a browser.)
+
  
 ## 📚 What's inside
  
@@ -56,10 +44,6 @@ options are shuffled on every attempt.
 4. Aim to clear **38 / 45 on both exams** before you book the real thing.
 5. Practice hands-on in Databricks Free Edition. The exam rewards having actually done the
    tasks, especially the CI/CD and Spark UI material.
-## 🚫 Not included on purpose
- 
-The official Databricks exam-guide PDF is Databricks' copyrighted document and is **not**
-redistributed here. Download it from the official certification page linked above.
  
 ## 📄 License
  
