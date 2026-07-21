@@ -41,8 +41,6 @@ exam (version effective **May 4, 2026** onward): a complete study guide plus thr
 2. Sit an exam in one uninterrupted 90-minute block, then review the per-domain breakdown.
 3. Send your remaining study time into whichever domains you scored lowest on.
 4. Aim to clear **38 / 45 on each of the three exams** before you book the real thing.
-5. Practice hands-on in Databricks Free Edition. The exam rewards having actually done the
-   tasks, especially the CI/CD and Spark UI material.
 
 ## 📄 License
 
